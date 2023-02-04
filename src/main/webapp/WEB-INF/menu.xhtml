@@ -1,0 +1,70 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pa="http://primefaces.org/atlantis">
+
+    <div class="layout-sidebar #{guestPreferences.menuColor}">
+        <pa:tabMenu id="tabMenu">
+            <pa:tab id="tab1" icon="pi pi-folder-open"  title="">
+                <h:form id="menu-form">
+                    <pa:menu widgetVar="AtlantisMenuWidget">
+                        <p:menuitem id="m_dashboard" value="DASHBOARD" outcome="/heiferKMS/usermanagement/dashboard"/>
+
+                        <p:menuitem id="Reports" value="REPORTS" />
+                        <p:menuitem id="manageReports" icon="pi pi-fw pi-book" value="Review Reports" outcome="/heiferKMS/reportmodule/reportreview"/>
+
+<!--                        <p:submenu id="m_components1" label="Manage Reports" icon="pi pi-fw pi-report">
+                            <p:menuitem id="m_configuration" value="Users uploaded reports " icon="pi pi-fw pi-book" outcome="/dashboard"/>
+
+
+                        </p:submenu>-->
+
+                        <!--                        <p:submenu id="m_components" label="Download Reports" icon="pi pi-fw pi-torh">
+                        
+                        
+                                                            <p:submenu id="n_0" label="National" icon="pi pi-fw pi-report">
+                                                            <p:menuitem id="n_1" value="Download Advocacy Report Folder Only" icon="pi pi-fw pi-file" outcome="/configuration"/>
+                                                            <p:menuitem id="n_2" value="Download Progress Report Folder Only" icon="pi pi-fw pi-file" outcome="/sourcepairing"/>
+                                                            <p:menuitem id="n_3" value="Download Project Monthly Report Folder Only" icon="pi pi-fw pi-file" outcome="/sourcepairing"/>
+                                                            <p:menuitem id="n_4" value="Download Training Folder Only" icon="pi pi-fw pi-file" outcome="/sourcepairing"/>
+                                                            <p:menuitem id="n_5" value="Download Weekly Report Folder Only" icon="pi pi-fw pi-file" outcome="/sourcepairing"/>
+                        
+                                                            </p:submenu>
+                                                            <p:submenu id="s_0" label="State" icon="pi pi-fw pi-report">
+                                                            <p:menuitem id="s_1" value="NYSC Desk Officer Report" icon="pi pi-fw pi-file" outcome="/configuration"/>
+                                                            <p:menuitem id="s_2" value="State Monthly Report" icon="pi pi-fw pi-file" outcome="/sourcepairing"/>
+                                                            </p:submenu>
+                                                            <p:submenu id="l_0" label="LGA" icon="pi pi-fw pi-report">
+                                                            <p:menuitem id="l_1" value="NYSC LGA REPORT" icon="pi pi-fw pi-file" outcome="/configuration"/>
+                                                            </p:submenu>
+                                                </p:submenu>-->
+
+                        <p:submenu id="u_0" label="Upload Reports" icon="pi pi-fw pi-upload">
+                            <p:menuitem id="u_w" value="Weekly Report" icon="pi pi-fw pi-file" outcome="/heiferKMS/reportmodule/weeklyreport"/>
+                            <p:menuitem id="u_m" value="Monthly Report" icon="pi pi-fw pi-file" outcome="/heiferKMS/reportmodule/monthlyreport"/>
+                            <p:menuitem id="u_s" value="Success Stories" icon="pi pi-fw pi-file" outcome="/heiferKMS/reportmodule/success_story"/>
+                            <p:menuitem id="u_f" value="Farmers Profile" icon="pi pi-fw pi-file" outcome="/heiferKMS/reportmodule/farmersprofile"/>
+
+                        </p:submenu><!-- comment -->
+
+
+                        <p:menuitem id="mu_0" value="MANAGE / CREATE USERS"/>
+
+                        <p:menuitem id="mu_1" value="Create user" icon="pi pi-fw pi-user" outcome="/heiferKMS/usermanagement/signup"/>
+                        <p:menuitem id="mu_2" value="Manage Users" icon="pi pi-fw pi-pencil" outcome="/heiferKMS/usermanagement/login"/>
+                        <p:menuitem id="switchacc" value="Switch Account" icon="pi pi-fw pi-user-minus"
+                                    outcome="/heiferKMS/usermanagement/login"/>
+                        <p:menuitem id="logout" value="Logout" icon="pi pi-fw pi-sign-out"
+                                    outcome="/heiferKMS/usermanagement/login"/>
+                    </pa:menu>
+                </h:form>
+            </pa:tab>
+
+
+        </pa:tabMenu>
+    </div>
+
+</ui:composition>

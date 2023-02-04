@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <!--<ui:define name="title">Charts</ui:define>-->
+
+    <ui:define name="content">
+        <h:body styleClass="login-body" style="display: flex; justify-content: center; align-items: center">
+
+        <div class="overbkg"> 
+                        <div class="overlaid"></div>
+                        <div> 
+            <p:graphicImage name="images/black.jpg" library="atlantis-layout" class="blackimg" />
+            <p:graphicImage name="images/backgroundimg.jpg" library="atlantis-layout" class="backimg" />
+        </div>
+
+        <div class="card ui-fluid" style="background-color: #fff; z-index: 1; width: 70%; height: 80vh; justify-content: center; align-items: center">
+            <div style=" justify-content: center; height: 60px; padding-top: 15px;  background-color: #1969AE; width: 100%;  color: #fff; display: flex; align-items: center"> 
+                <h2>Create User Account</h2>
+            </div>
+            <div style="padding: 20px"> 
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+                    <div class="field" style="width: 45%">
+                        <p:outputLabel for="name1" >First Name</p:outputLabel>
+                        <p:inputText id="name1" placeholder="Enter first name"/>
+                    </div>
+                    <div class="field" style="width: 45%">
+                        <p:outputLabel for="name1" >Last Name</p:outputLabel>
+                        <p:inputText id="name2" placeholder="Enter last name"/>
+                    </div>
+                </div>
+                <div  style="display: flex; justify-content: space-between; margin-bottom: 10px">
+                    <div style="display: flex; flex-direction: column; "> 
+                        <p>Reporting State</p>
+                        <p:selectCheckboxMenu class="statediv" label="Select" filter="true" filterMatchMode="startsWith" style="width: 415px">
+                            <f:selectItem itemLabel="Benue" itemValue="1" />
+                            <f:selectItem itemLabel="Edo" itemValue="2" />
+                            <f:selectItem itemLabel="Nasarawa" itemValue="3" />
+                            <f:selectItem itemLabel="Lagos" itemValue="3" />
+                            <f:selectItem itemLabel="Ogun" itemValue="3" />
+                        </p:selectCheckboxMenu>
+                    </div>
+                    <div class="field" style="width: 45%">
+                        <p:outputLabel for="name1">Designation</p:outputLabel>
+                        <p:inputText id="name3" placeholder="Enter user designation"/>
+                    </div>
+                </div>
+                <div class="field" style=" margin-bottom: 20px">
+                    <p:outputLabel for="email1">Email</p:outputLabel>
+                    <p:inputText id="email1" placeholder="Enter email address"/>
+                </div>
+                <div class="field" style=" margin-bottom: 20px">
+                    <p:outputLabel for="age1">Create Username</p:outputLabel>
+                    <p:inputText id="age1" placeholder="Enter Username"/>
+                </div>
+                <div style="display: flex; flex-direction: column; "> 
+                        <p>Select User Role</p>
+                        <p:selectCheckboxMenu label="Select" style="margin-bottom: 20px">
+                            <f:selectItem itemLabel="Super User" itemValue="1" />
+                            <f:selectItem itemLabel="National User" itemValue="2" />
+                            <f:selectItem itemLabel="State Userr" itemValue="3" />
+                            
+                        </p:selectCheckboxMenu>
+                    </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 80px">
+                    <div class="field" style="width: 45%">
+                        <p:outputLabel for="name1">Create Password</p:outputLabel>
+                        <p:inputText id="name4" placeholder="Enter password"/>
+                    </div>
+                    <div class="field" style="width: 45%">
+                        <p:outputLabel for="name1">Confirm Password</p:outputLabel>
+                        <p:inputText id="name5" placeholder="Enter password"/>
+                    </div>
+                </div>
+                 <div class="card">
+                        
+                     <p:button value="Save to database" style="background-color: #1969ae"/>
+                    </div>
+            </div>
+        </div>
+
+
+
+
+
+        <h:outputStylesheet name="css/primeicons.css" library="atlantis-layout"/>
+        <h:outputStylesheet name="css/primeflex.min.css" library="atlantis-layout"/>
+        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="atlantis-layout" />
+    </h:body>
+
+    </ui:define>
+
+</ui:composition>

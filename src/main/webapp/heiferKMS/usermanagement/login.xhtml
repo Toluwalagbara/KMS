@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>PrimeFaces Atlantis</title>
+    </h:head>
+
+    
+    <h:body styleClass="login-body">
+       
+        <div> 
+<!--            <div class="overlaid"></div>
+            <div> -->
+        <p:graphicImage name="images/black.jpg" library="atlantis-layout" class="blackimg" />
+        <p:graphicImage name="images/backgroundimg.jpg" library="atlantis-layout" class="backimg" />
+            </div>
+        
+       
+
+        <div class="login-panel ui-fluid">
+            
+            <div class="grid">
+                <div class="col-12 logo-container">
+                    <p:graphicImage name="images/logo-navy.svg" library="atlantis-layout" />
+                    <!--<h2>WELCOME</h2>-->
+
+                    <h1>LOGIN</h1>
+                </div>
+<!--                <div class="col-12" style="display: flex">
+                    <i class="pi pi-search"></i>
+                    <p:inputText placeholder="Username" />
+                </div>-->
+                        <div class="col-12 mb-2 lg:col-12 mb-lg-0">
+                            <span class="ui-input-icon-left">
+                                <i class="pi pi-user"></i>
+                                <p:inputText placeholder="Username" />
+                            </span>
+                        </div>
+                        <div class="col-12 mb-2 lg:col-12 mb-lg-0">
+                            <span class="ui-input-icon-left">
+                                <i class="pi pi-lock"></i>
+                                 <p:password placeholder="Password" feedback="false"/>
+
+                            </span>
+                        </div>
+                
+                <div class="col-12 button-container">
+                    <p:button style="background: #1969AE;" outcome="/heiferKMS/usermanagement/dashboard" value="Sign In"  />
+                    <p class="resetpword">Forgot password?</p>
+
+                    <!--<p:button style="background-color: #7dbec2" outcome="/dashboard" value="Forgot Password" styleClass="ui-button-info" />-->
+                </div>
+            </div>
+        </div>
+
+        <h:outputStylesheet name="css/primeicons.css" library="atlantis-layout"/>
+        <h:outputStylesheet name="css/primeflex.min.css" library="atlantis-layout"/>
+        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="atlantis-layout" />
+    </h:body>
+
+</html>

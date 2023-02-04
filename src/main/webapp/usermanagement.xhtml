@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Dashboard</ui:define>
+
+    <ui:define name="head">
+        <h:outputScript name="js/chart.js" library="demo"/>
+        <script type="text/javascript">
+            $(function () {
+                var salesChart = new Chart(document.getElementById("sales-chart").getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                        datasets: [
+                            {
+                                label: 'First Dataset',
+                                data: [65, 59, 80, 81, 56, 55, 40],
+                                fill: false,
+                                borderColor: '#FFC107'
+                            },
+                            {
+                                label: 'Second Dataset',
+                                data: [28, 48, 40, 19, 86, 27, 90],
+                                fill: false,
+                                borderColor: '#03A9F4'
+                            }
+                        ]
+                    }
+                });
+            });
+        </script>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="grid dashboard">
+       
+            <div class="col-12 md:col-12">
+                <div class="user-card">
+                    <div class="user-card-header"></div>
+                    <div class="user-card-content">
+                        <p:graphicImage name="images/profile-image.png" library="atlantis-layout"/>
+                        <span class="user-card-name">Jane White</span>
+                        <span class="user-card-role">System Admin</span>
+                        <p:commandButton type="button" value="Connect" icon="pi pi-check"/>
+                    </div>
+                    <div class="user-card-footer">
+                        <div class="grid">
+                            <div class="col-4">
+                                <span>Issues</span>
+                                <span>52</span>
+                            </div>
+                            <div class="col-4">
+                                <span>Open</span>
+                                <span>25</span>
+                            </div>
+                            <div class="col-4">
+                                <span>Closed</span>
+                                <span>27</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         
+        </div>
+    </ui:define>
+
+</ui:composition>

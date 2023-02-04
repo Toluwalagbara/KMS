@@ -1,0 +1,220 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Case Register</ui:define>
+
+    <ui:define name="head">
+        <h:outputScript name="js/hiddenValue.js" library="demo"/>
+    </ui:define>
+
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="p-grid crud-demo">  
+                <div class="p-col-12">
+                    <div class="card">
+                        <p:growl id="messages" showDetail="true" />
+
+
+                        <p:toolbar styleClass="p-mb-4" >
+                            <p:toolbarGroup>
+<!--                                <p:commandButton value="Create New Case" icon="pi pi-plus" actionListener="# {casesview.openNew}" update="manage-product-content" oncomplete="PF('manageCasesDialog').show()" 
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" onclick="checkFire();" />-->
+                                <p:commandButton id="delete-products-button" icon="pi pi-trash"  
+                                                 styleClass="ui-button-danger"  update="dt-allcases" oncomplete="location.reload()" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Export PDF" icon="pi pi-upload" styleClass="ui-button-help" ajax="false" immediate="true" style="margin-right: .5rem">
+                                    <p:dataExporter type="pdf" target="dt-allcases" fileName="DCRMS-Criminal-Cases"/>
+                                </p:commandButton>
+
+                                <p:commandButton value="Export Excel" icon="pi pi-upload" styleClass="ui-button-help" ajax="false" immediate="true" style="margin-right: .5rem">
+                                    <p:dataExporter type="csv" target="dt-allcases" fileName="DCRMS-Criminal-Cases"/>
+                                </p:commandButton>  
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <ui:include src="/utilityUiElements/casesUtilityTable.xhtml"></ui:include>
+                        <p:dialog closeOnEscape="true" header="CREATE NEW CASE" showEffect="fade" modal="true" widgetVar="manageCasesDialog" fitViewport="true" positionType="absolute"  blockScroll="false">
+
+
+                            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                                <p:outputPanel>
+                                    <div class="p-field">
+                                        <div class="p-field">
+                                            <p:outputLabel for="plaint"><strong>Complainant(s)</strong></p:outputLabel>
+                                            <p:selectOneMenu required="true" id="plaint">
+                                                <f:selectItems  />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <p:divider layout="horizontal">
+                                            VS
+                                        </p:divider>
+
+                                       <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv" style="display: flex">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant"
+                                                       
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText id="lastn"  />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age"  />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex" >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="p-col-1">
+                                                <p:button value="+" onclick="showandhide(1);" id="btn" />
+                                            </div>
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv1" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant1"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant1"
+                                                          
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn1"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn1"
+                                                          
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age1"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age1"  />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex1"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex1" >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(2);" id="btn1" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--                                            <div class="p-col-1">
+                                                                                            <p:button value="+" onclick="showandhide(2);" id="btn1" />
+                                                                                        </div>-->
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv2" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant2"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant2"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn2"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn2"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age2"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age2"  />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex2"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex2" >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(3);" id="btn2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+ 
+                                    </div>
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Save" icon="pi pi-check" resetValues="true" update="manage-product-content" process="manage-product-content @this" />
+                                <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageCasesDialog').hide()" class="ui-button-warning">
+                                    <p:confirm header="Caution" message="This action will close this case without saving, do you want to continue?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </f:facet>
+
+                        </p:dialog> 
+
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

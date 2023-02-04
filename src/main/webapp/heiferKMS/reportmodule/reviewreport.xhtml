@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+                
+    <ui:define name="title">Dashboard</ui:define>
+
+    <ui:define name="head">
+        
+        <h:outputScript name="js/chart.js" library="demo"/>
+        <script type="text/javascript">
+            $(function () {
+                var salesChart = new Chart(document.getElementById("sales-chart").getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                        datasets: [
+                            {
+                                label: 'First Dataset',
+                                data: [65, 59, 80, 81, 56, 55, 40],
+                                fill: false,
+                                borderColor: '#FFC107'
+                            },
+                            {
+                                label: 'Second Dataset',
+                                data: [28, 48, 40, 19, 86, 27, 90],
+                                fill: false,
+                                borderColor: '#03A9F4'
+                            }
+                        ]
+                    }
+                });
+            });
+        </script>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="grid dashboard">
+<!--                <div class="card">
+                   
+                    <p:tabView>
+                        <p:tab title="Dashboard">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </p:tab>
+                        <p:tab title="Static Navigation">
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque
+                                ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                                Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
+                        </p:tab>
+                        
+                    </p:tabView>
+            </div>-->
+            <div class="col-12" style="display: flex; justify-content: flex-end;">
+                <div style="margin-right: 10px" >
+<!--                    <p:button value="Copy" styleClass="rounded-button mr-2 mb-2" style="background-color: #1969ae;
+ border-radius: 3px; border:none"/>
+                    <p:button value="CSV" styleClass="rounded-button mr-2 mb-2" style="background-color: #1969ae;
+ border-radius: 3px; border:none"/>
+                    <p:button value="Excel" styleClass="rounded-button mr-2 mb-2" style="background-color: #1969ae;
+ border-radius: 3px; border:none"/>
+                    <p:button value="PDF" styleClass="rounded-button mr-2 mb-2" style="background-color: #1969ae;
+ border-radius: 3px; border:none"/>
+                    <p:button value="Print" styleClass="rounded-button mr-2 mb-2" style="background-color: #1969ae;
+ border-radius: 3px; border:none"/>-->
+                    <h:form>
+                    <p:toolbarGroup align="right">
+                                <!--<p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download"/>-->
+                                <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                    </h:form>
+                </div > 
+
+                <div class="">
+                    <span class="ui-input-icon-right">
+                        <p:inputText placeholder="Search" />
+                        <i class="pi pi-search"></i>
+                    </span>
+                </div>
+
+            </div>
+            
+            <div class="col-12">
+                <div class="card">
+                    <p:dataTable id="productsTable" var="product" value="#{dataTableDemoView.products1}" reflow="true"
+                                 paginatorPosition="bottom"
+                                 rowKey="#{product.id}" paginator="true" rows="5">
+                        <p:column headerText="Report_Title" sortBy="#{product.id}">
+                            <h:outputText value="#{product.id}"/>
+                        </p:column>
+                        <p:column headerText="From" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+                        <p:column headerText="To" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+                        <p:column headerText="Report Category" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+                        <p:column headerText="Report Type" sortBy="#{product.inventoryStatus}">
+                            <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus}</span>
+                        </p:column>
+                        <p:column headerText="Uploadeded report" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+                        <p:column headerText="File Type" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+                        <p:column headerText="Action" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+<!--                        <p:column headerText="Price" sortBy="#{product.price}">
+                            <h:outputText value="#{product.price}">
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                        </p:column>-->
+                        
+<!--                        <p:column style="text-align: center">
+                            <p:commandButton icon="pi pi-search"/>
+                        </p:column>-->
+                    </p:dataTable>
+
+                </div>
+            </div>
+        </div>
+                    <h5 style="z-index: 120; margin-left: 65%">Manage uploaded reports from users</h5>
+
+    </ui:define>
+
+</ui:composition>

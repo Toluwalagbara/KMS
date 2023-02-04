@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Charts</ui:define>
+
+    <ui:define name="content">
+        <div class="grid ui-fluid">
+            <div class="col-12 md:col-6 lg:col-3" style="margin: 5px; height: 150px; box-shadow: 0.5px 0.5px #888888; border-radius: 5px; width: 280px; background-color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div class="grid grid-nogutter card overview-box overview-box-1">
+                    <div style="text-align: center">
+                        <span class="overview-box-count" style="font-size: 36px; font-weight: 600; color: #1969ae">89,098</span>                <!--<span class="overview-box-name">Messages</span>-->
+
+                        <p style="color: #000">Total No of Farmers</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3" style="margin: 5px; height: 150px; border-radius: 5px; box-shadow: 0.5px 0.5px #888888; width: 280px; background-color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div class="grid grid-nogutter card overview-box overview-box-1">
+                    <div style="text-align: center">
+                        <span class="overview-box-count" style="font-size: 36px; font-weight: 600; color: #1969ae">25,080</span>                <!--<span class="overview-box-name">Messages</span>-->
+
+                        <p style="color: #000">Total No of Male Farmers</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3" style="margin: 5px; height: 150px; border-radius: 5px; box-shadow: 0.5px 0.5px #888888; width: 280px; background-color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div class="grid grid-nogutter card overview-box overview-box-1">
+                    <div style="text-align: center">
+                        <span class="overview-box-count" style="font-size: 36px; font-weight: 600; color: #1969ae">53,098</span>                <!--<span class="overview-box-name">Messages</span>-->
+
+                        <p style="color: #000">Total No of Female Farmers</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3" style="margin: 5px; height: 150px; border-radius: 5px; width: 280px; background-color: #fff; box-shadow: 0.5px 0.5px #888888; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div class="grid grid-nogutter card overview-box overview-box-1">
+                    <div style="text-align: center">
+                        <span class="overview-box-count" style="font-size: 36px; font-weight: 600; color: #1969ae">90,098</span>                <!--<span class="overview-box-name">Messages</span>-->
+
+                        <p style="color: #000">Total Cooperative Society</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3" style="margin: 5px; height: 150px; border-radius: 5px; width: 280px; box-shadow: 0.5px 0.5px #888888; background-color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div class="grid grid-nogutter card overview-box overview-box-1">
+                    <div style="text-align: center">
+                        <span class="overview-box-count" style="font-size: 36px; font-weight: 600; color: #1969ae">38,900</span>                <!--<span class="overview-box-name">Messages</span>-->
+
+                        <p style="color: #000">Total Active Members</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3" style="margin: 5px; height: 150px; border-radius: 5px; width: 280px; box-shadow: 0.5px 0.5px #888888; background-color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div class="grid grid-nogutter card overview-box overview-box-1">
+                    <div style="text-align: center">
+                        <span class="overview-box-count" style="font-size: 36px; font-weight: 600; color: #1969ae">90,098</span>                <!--<span class="overview-box-name">Messages</span>-->
+
+                        <p style="color: #000">Weekly Report</p>
+                    </div>
+
+                </div>
+            </div>
+            <div style=" width: 90%; display: flex; flex-wrap: wrap; margin-top: 50px"> 
+                <div class="col-12 lg:col-6 md:col-4">
+                    <div class="card" style="padding-top: 20px; box-shadow: 0.5px 0.5px #888888;">
+                        <h5 style="text-align: center">Farmers by state</h5>
+                        <p:barChart model="#{chartDemoView.barModel}" style="width: 100%; height: 525px;"/>
+                    </div>
+                </div>
+
+
+                <!--            <div class="col-12 lg:col-4">
+                                <div class="card">
+                                    <h5>Mixed Chart</h5>
+                                    <p:barChart model="#{chartDemoView.mixedModel}" style="width: 100%; height: 500px;"/>
+                                </div>
+                            </div>-->
+
+                <div class="col-12 lg:col-6 md:col-8">
+                    <div class="card" style="box-shadow: 0.5px 0.5px #888888; padding-top: 20px ">
+                        <h5 style="text-align: center">>Farmers by age</h5>
+                        <p:pieChart model="#{chartDemoView.pieModel}" style="width: 100%; height: 500px;"/>
+                    </div>
+                </div>
+                <div class="col-12 lg:col-6 md:col-8">
+                    <div class="card" style="box-shadow: 0.5px 0.5px #888888; padding-top: 20px ">
+                        <h5 style="text-align: center">>Progression by year</h5>
+                        <p:lineChart model="#{chartDemoView.lineModel}" style="width: 100%; height: 500px;"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--            <div class="col-12 lg:col-4">
+                            <div class="card">
+                                <h5>Donut Chart</h5>
+                                <p:donutChart model="#{chartDemoView.donutModel}" style="width: 100%; height: 500px;"/>
+                            </div>
+                        </div>
+            
+                        <div class="col-12 lg:col-4">
+                            <div class="card">
+                                <h5>Polar Area Chart</h5>
+                                <p:polarAreaChart model="#{chartDemoView.polarAreaModel}" style="width: 100%; height: 500px;"/>
+                            </div>
+                        </div>-->
+
+            <!--            <div class="col-12 lg:col-4">
+                            <div class="card">
+                                <h5>Radar Chart</h5>
+                                <p:radarChart model="#{chartDemoView.radarModel}" style="width: 100%; height: 500px;"/>
+                            </div>
+                        </div>
+            
+                        <div class="col-12 lg:col-4">
+                            <div class="card">
+                                <h5>Bubble Chart</h5>
+                                <p:bubbleChart model="#{chartDemoView.bubbleModel}" style="width: 100%; height: 500px;"/>
+                            </div>
+                        </div>
+            
+                        <div class="col-12 lg:col-4">
+                            <div class="card">
+                                <h5>Scatter Chart</h5>
+                                <p:scatterChart model="#{chartDemoView.scatterModel}" style="width: 100%; height: 500px;"/>
+                            </div>
+                        </div>-->
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

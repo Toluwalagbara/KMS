@@ -1,0 +1,61 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:sec="http://www.springframework.org/security/tags"
+    xmlns:pa="http://primefaces.org/atlantis">
+
+    <div class="layout-sidebar #{guestPreferences.menuColor}">
+        <pa:tabMenu id="tabMenu">
+            <pa:tab id="tab1" icon="pi pi-folder-open" title="Case Manager">
+                <h:form id="menu-form">
+                    <pa:menu widgetVar="AtlantisMenuWidget">
+                        <p:menuitem id="om_dashboard" value="Dashboard" icon="pi pi-fw pi-th-large" outcome="/dashboards/legalAdviserDashboard.xhtml"/>
+
+                         <p:separator style="width:inherit; height:5px"/>                     
+                         <p:menuitem id="om_cases" value="Cases" icon="pi pi-fw pi-folder-open" style="padding: 10" /> 
+                           
+                         <p:menuitem id="om_uploadv1" value="New Cases" icon="pi pi-fw pi-folder-open" style="margin-left:10px"
+                                        outcome="/caseTrackerDept/caseRegisterv1" rendered="#{sec:areAnyGranted('ROLE_SUPER')}"/> 
+                        <p:menuitem id="om_upload" value="All Cases" icon="pi pi-fw pi-folder-open" style="margin-left:10px"
+                                        outcome="/caseTrackerDept/caseRegister" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_GROUPHEAD, ROLE_DIRECTOR, ROLE_ANTE,ROLE_PERMSEC,ROLE_COUNSEL')}"/>               
+                         <p:menuitem id="my_casesv1" value="My Cases" icon="pi pi-fw pi-briefcase" style="margin-left:10px"
+                                       outcome="/utilityUiElements/myCasesUtil" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_COUNSEL, ROLE_DIRECTOR, ROLE_GROUPHEAD')}"/>   
+                        <p:menuitem id="om_tasker" value="Assign Case" icon="pi pi-fw pi-share-alt" style="margin-left:10px"
+                                        outcome="/caseTrackerDept/caseAssignmentManager" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_GROUPHEAD, ROLE_DIRECTOR, ROLE_ANTE,ROLE_PERMSEC')}"/>
+
+                       
+                        <p:menuitem id="om_cor" value="Letters" icon="pi pi-fw pi-eye"/> 
+                            <p:menuitem id="om_corupload" value="Letters Cases" icon="pi pi-fw pi-folder-open" style="margin-left:10px"
+                                        outcome="/caseTrackerDept/coroner" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_GROUPHEAD, ROLE_DIRECTOR, ROLE_ANTE,ROLE_PERMSEC')}"/> 
+                            <p:menuitem id="my_corcases" value="My Letters" icon="pi pi-fw pi-briefcase" style="margin-left:10px"
+                                        outcome="/utilityUiElements/myCorUtil" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_COUNSEL, ROLE_DIRECTOR, ROLE_GROUPHEAD')}"/> 
+                            <p:menuitem id="om_cortasker" value="Assign" icon="pi pi-fw pi-share-alt" style="margin-left:10px"
+                                        outcome="/caseTrackerDept/coronerAssignment" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_GROUPHEAD, ROLE_DIRECTOR, ROLE_ANTE, ROLE_PERMSEC')}"/>
+
+                        <p:menuitem id="om_report" value="Report" icon="pi pi-fw pi-info-circle" outcome="/reportModule/userReport" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_DIRECTOR,ROLE_AG,ROLE_PERMSEC')}"/>
+
+                        <p:submenu id="om_users" label="Manage" icon="pi pi-fw pi-cog" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_DIRECTOR, ROLE_AG')}">
+                            <p:menuitem id="om_formlayout3" value="User Manager" icon="pi pi-fw pi-user-edit"
+                                        outcome="/userManager/usermanagement" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_DIRECTOR, ROLE_AG')}"/>
+                            <p:menuitem id="om_formlayout4" value="Courts" icon="pi pi-fw pi-home"
+                                        outcome="/userManager/courtmanagement"/>
+                            <p:menuitem id="om_formlayout5" value="Audit" icon="pi pi-fw pi-exclamation-triangle"
+                                        outcome="/utilityUiElements/Auditlog"/>
+                            <p:menuitem id="om_formlayout6" value="Application Config" icon="pi pi-fw pi-cog" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_DIRECTOR')}"
+                                        outcome="/configModule/config"/>
+                            <p:menuitem id="om_formlayout7" value="Notifications" icon="pi pi-fw pi-cog" rendered="#{sec:areAnyGranted('ROLE_SUPER')}"
+                                        outcome="/configModule/notifications"/>
+                        </p:submenu>
+
+                    </pa:menu>
+                </h:form>
+            </pa:tab>
+
+
+        </pa:tabMenu>
+    </div>
+
+</ui:composition>

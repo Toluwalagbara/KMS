@@ -1,0 +1,1135 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Case Register</ui:define>
+
+    <ui:define name="head">
+        <h:outputScript name="js/hiddenValue.js" library="demo"/>
+    </ui:define>
+
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="p-grid crud-demo">  
+                <div class="p-col-12">
+                    <div class="card">
+                        <p:growl id="messages" showDetail="true" />
+
+
+                        <p:toolbar styleClass="p-mb-4" rendered="#{sec:areAnyGranted('ROLE_SUPER, ROLE_CASETRACKER')}">
+                            <p:toolbarGroup>
+<!--                                <p:commandButton value="Create New Case" icon="pi pi-plus" actionListener="# {casesview.openNew}" update="manage-product-content" oncomplete="PF('manageCasesDialog').show()" 
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" onclick="checkFire();" />-->
+                                <p:commandButton id="delete-products-button" value="#{casesview.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{casesview.deleteSelectedCases}" 
+                                                 styleClass="ui-button-danger" disabled="#{!casesview.hasSelectedCases()}" update="dt-allcases" oncomplete="location.reload()" >
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Export PDF" icon="pi pi-upload" styleClass="ui-button-help" ajax="false" immediate="true" style="margin-right: .5rem">
+                                    <p:dataExporter type="pdf" target="dt-allcases" fileName="DCRMS-Criminal-Cases"/>
+                                </p:commandButton>
+
+                                <p:commandButton value="Export Excel" icon="pi pi-upload" styleClass="ui-button-help" ajax="false" immediate="true" style="margin-right: .5rem">
+                                    <p:dataExporter type="csv" target="dt-allcases" fileName="DCRMS-Criminal-Cases"/>
+                                </p:commandButton>  
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <ui:include src="/utilityUiElements/casesUtilityTable.xhtml"></ui:include>
+                        <p:dialog closeOnEscape="true" header="CREATE NEW CASE" showEffect="fade" modal="true" widgetVar="manageCasesDialog" fitViewport="true" positionType="absolute"  blockScroll="false">
+
+
+                            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                                <p:outputPanel>
+                                    <div class="p-field">
+                                        <div class="p-field">
+                                            <p:outputLabel for="plaint"><strong>Complainant(s)</strong></p:outputLabel>
+                                            <p:selectOneMenu value="#{testcontroller.prosec.name}" required="true" id="plaint">
+                                                <f:selectItems value="#{prosecutorRepository.allProsecutors}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <p:divider layout="horizontal">
+                                            VS
+                                        </p:divider>
+
+                                       <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv" style="display: flex">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant"
+                                                            value="#{testcontroller.defendant.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText id="lastn" value="#{testcontroller.defendant.lastName}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age" value="#{testcontroller.defendant.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex" value="#{testcontroller.defendant.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="p-col-1">
+                                                <p:button value="+" onclick="showandhide(1);" id="btn" />
+                                            </div>
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv1" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant1"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant1"
+                                                            value="#{testcontroller.defendant_1.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn1"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn1"
+                                                            value="#{testcontroller.defendant_1.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age1"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age1" value="#{testcontroller.defendant_1.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex1"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex1" value="#{testcontroller.defendant_1.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(2);" id="btn1" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--                                            <div class="p-col-1">
+                                                                                            <p:button value="+" onclick="showandhide(2);" id="btn1" />
+                                                                                        </div>-->
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv2" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant2"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant2"
+                                                            value="#{testcontroller.defendant_2.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn2"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn2"
+                                                            value="#{testcontroller.defendant_2.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age2"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age2" value="#{testcontroller.defendant_2.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex2"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex2" value="#{testcontroller.defendant_2.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(3);" id="btn2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv3" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant3"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant3"
+                                                            value="#{testcontroller.defendant_3.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn3"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn3"
+                                                            value="#{testcontroller.defendant_3.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age3"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age3" value="#{testcontroller.defendant_3.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex3"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex3" value="#{testcontroller.defendant_3.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(4);" id="btn3" />
+                                                    </div>
+                                                </div>
+
+                                            </div>                                            
+                                        </div>
+
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv4" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant4"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant4"
+                                                            value="#{testcontroller.defendant_4.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn4"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn4"
+                                                            value="#{testcontroller.defendant_4.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age4"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age4" value="#{testcontroller.defendant_4.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex4"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex4" value="#{testcontroller.defendant_4.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(5);" id="btn4" />
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv5" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant5"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant5"
+                                                            value="#{testcontroller.defendant_5.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn5"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn5"
+                                                            value="#{testcontroller.defendant_5.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age5"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age5" value="#{testcontroller.defendant_5.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex5"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex5" value="#{testcontroller.defendant_5.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(6);" id="btn5" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv6" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant6"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant6"
+                                                            value="#{testcontroller.defendant_6.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn6"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn6"
+                                                            value="#{testcontroller.defendant_6.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age6"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age6" value="#{testcontroller.defendant_6.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex6"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex6" value="#{testcontroller.defendant_6.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(7);" id="btn6" />
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv7" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant7"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant7"
+                                                            value="#{testcontroller.defendant_7.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn7"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn7"
+                                                            value="#{testcontroller.defendant_7.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age7"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age7" value="#{testcontroller.defendant_7.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex7"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex7" value="#{testcontroller.defendant_7.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(8);" id="btn7" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv8" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant8"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant8"
+                                                            value="#{testcontroller.defendant_8.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn8"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn8"
+                                                            value="#{testcontroller.defendant_8.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age8"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age8" value="#{testcontroller.defendant_8.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex8"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex8" value="#{testcontroller.defendant_8.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(9);" id="btn8" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv9" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant9"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant9"
+                                                            value="#{testcontroller.defendant_9.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn9"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn9"
+                                                            value="#{testcontroller.defendant_9.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age9"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age9" value="#{testcontroller.defendant_9.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex9"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu id="sex9" value="#{testcontroller.defendant_9.gender}">
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(10);" id="btn9" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv10" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant10"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant10"
+                                                            value="#{testcontroller.defendant_10.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn10"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn10"
+                                                            value="#{testcontroller.defendant_10.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age10"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age10" value="#{testcontroller.defendant_10.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex10"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex10"
+                                                            value="#{testcontroller.defendant_10.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(11);" id="btn10" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv11" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant11"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant11"
+                                                            value="#{testcontroller.defendant_11.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn11"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn11"
+                                                            value="#{testcontroller.defendant_11.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age11"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age11" value="#{testcontroller.defendant_11.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex11"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex11"
+                                                            value="#{testcontroller.defendant_11.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(12);" id="btn11" />
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv12" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant12"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant12"
+                                                            value="#{testcontroller.defendant_12.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn12"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn12"
+                                                            value="#{testcontroller.defendant_12.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age12"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age12" value="#{testcontroller.defendant_12.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex12"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex12"
+                                                            value="#{testcontroller.defendant_12.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>                                                    
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(13);" id="btn12" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv13" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant13"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant13"
+                                                            value="#{testcontroller.defendant_13.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn13"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn13"
+                                                            value="#{testcontroller.defendant_13.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age13"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age13" value="#{testcontroller.defendant_13.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex13"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex13"
+                                                            value="#{testcontroller.defendant_13.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(14);" id="btn13" />
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv14" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant14"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant14"
+                                                            value="#{testcontroller.defendant_14.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn14"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn14"
+                                                            value="#{testcontroller.defendant_14.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age14"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age14" value="#{testcontroller.defendant_14.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex14"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex14"
+                                                            value="#{testcontroller.defendant_14.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(15);" id="btn14" />
+                                                    </div>
+                                                </div>
+                                            </div>                                           
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv15" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant15"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant15"
+                                                            value="#{testcontroller.defendant_15.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn15"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn15"
+                                                            value="#{testcontroller.defendant_15.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age15"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age15" value="#{testcontroller.defendant_15.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex15"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex15"
+                                                            value="#{testcontroller.defendant_15.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(16);" id="btn15" />
+                                                    </div>
+                                                </div>
+                                            </div>                                           
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv16" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant16"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant16"
+                                                            value="#{testcontroller.defendant_16.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn16"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn16"
+                                                            value="#{testcontroller.defendant_16.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age16"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age16" value="#{testcontroller.defendant_16.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex16"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex16"
+                                                            value="#{testcontroller.defendant_16.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(17);" id="btn16" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv17" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant17"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant17"
+                                                            value="#{testcontroller.defendant_17.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn17"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn17"
+                                                            value="#{testcontroller.defendant_17.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age17"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age17" value="#{testcontroller.defendant_17.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex17"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex17"
+                                                            value="#{testcontroller.defendant_17.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>                                                    
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(18);" id="btn17" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv18" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant18"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant18"
+                                                            value="#{testcontroller.defendant_18.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn18"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn18"
+                                                            value="#{testcontroller.defendant_18.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age18"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age18" value="#{testcontroller.defendant_18.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex18"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex18"
+                                                            value="#{testcontroller.defendant_18.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                    <div class="p-col-1">
+                                                        <p:button value="+" onclick="showandhide(19);" id="btn18" />
+                                                    </div>
+                                                </div>
+                                            </div>                                           
+                                        </div>
+
+                                        <div class="p-field">
+                                            <div class="container-fluid">
+                                                <div class="p-row" id="divv19" style="display: none">
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="appliant19"
+                                                                       ><strong>Defendant(s) First Name</strong></p:outputLabel
+                                                        >
+                                                        <p:inputText
+                                                            id="appliant19"
+                                                            value="#{testcontroller.defendant_19.firstName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-3">
+                                                        <p:outputLabel for="lastn19"><strong>Last Name</strong></p:outputLabel>
+                                                        <p:inputText
+                                                            id="lastn19"
+                                                            value="#{testcontroller.defendant_19.lastName}"
+                                                            />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="age19"><strong>Age</strong></p:outputLabel>
+                                                        <p:inputText id="age19" value="#{testcontroller.defendant_19.age}" />
+                                                    </div>
+
+                                                    <div class="p-col-2">
+                                                        <p:outputLabel for="sex19"><strong>Sex</strong></p:outputLabel>
+                                                        <p:selectOneMenu
+                                                            id="sex19"
+                                                            value="#{testcontroller.defendant_19.gender}"
+                                                            >
+                                                            <f:selectItem
+                                                                itemLabel="Choose a Gender"
+                                                                itemValue=""
+                                                                noSelectionOption="false"
+                                                                />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                            <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                            <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                        <div class="p-field">
+                                            <p:outputLabel for="ninid"><strong>Defendant(s) National Identity Number</strong></p:outputLabel>
+                                            <p:chips unique="true" id="ninid"  value="#{testcontroller.defendant_list.nin}" />
+                                        </div>
+                                        <p:divider layout="horizontal">
+
+                                        </p:divider>
+                                        <br></br>
+                                        <div class="p-field">
+
+                                            <p></p>
+                                            <p:outputLabel for="catg"><strong>Category</strong></p:outputLabel>
+
+                                            <p:selectOneMenu value="#{testcontroller.defendant_list.completeCategory}" required="true" id="catg">
+                                                <f:selectItems value="#{caseCategoryRepository.allCategories }" />
+                                            </p:selectOneMenu>
+                                            <p></p>
+                                            <small>*Please select only one category*</small>
+                                        </div>
+
+
+                                        <div class="p-field">
+                                            <p:outputLabel for="offences"><strong>Offences</strong></p:outputLabel>
+                                            <p:autoComplete id="offences" dropdown="true" multiple="true"  completeMethod="#{autoDropDownView.completeOffences}" value="#{testcontroller.defendant_list.offences}" placeholder="Add Offence(s)" required="true"/>
+                                        </div> 
+
+
+
+                                        <p:divider layout="horizontal">
+
+                                        </p:divider>
+                                        <br></br>
+                                        <div class="p-field">
+                                            <p:outputLabel for="chargeno"><strong>Charge Number</strong></p:outputLabel>
+                                            <p:inputText id="chargeno" value="#{testcontroller.newcase.chargeno}" />
+                                        </div>
+
+                                        <div class="p-field">
+                                            <p:outputLabel for="magno"><strong>Court Number</strong></p:outputLabel>
+                                            <p:inputText id="magno" value="#{testcontroller.newcase.magno}" />
+                                        </div>
+
+                                        <div class="p-field"> <!-- Change this to LGA where the crime is commited -->
+                                            <p:outputLabel for="lga">L.G.A where crime was commited</p:outputLabel>
+                                            <p:selectOneMenu placeholder="Choose a LGA" id="lga" value="#{testcontroller.newcase.lga}" required="true">
+                                                <f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="false"/>
+                                                <f:selectItem itemLabel="Abaji" itemValue="Abaji" />
+                                                <f:selectItem itemLabel="Abuja Municipal Area Council" itemValue="Abuja Municipal Area Council" />
+                                                <f:selectItem itemLabel="Bwari" itemValue="Bwari" />
+                                                <f:selectItem itemLabel="Gwagwalada" itemValue="Gwagwalada" />
+                                                <f:selectItem itemLabel="Kuje" itemValue="Kuje" />
+                                                <f:selectItem itemLabel="Kwali" itemValue="Kwali" />                                            
+                                            </p:selectOneMenu>
+                                        </div>
+
+                                        <p:divider layout="horizontal">
+
+                                        </p:divider>
+                                        <br></br>
+                                        <div class="p-field">
+                                            <p:outputLabel for="forensic"><strong>Forensic Evidence</strong></p:outputLabel>
+                                            <p:autoComplete id="forensic" dropdown="true" multiple="true"  completeMethod="#{autoDropDownView.forensicTypes}" value="#{testcontroller.defendant_list.forensictype}" placeholder="Select Forensic Type(s)"/>
+                                        </div> 
+
+                                        <div class="p-field">
+                                            <p:outputLabel for="remak"><strong>Remarks</strong></p:outputLabel>
+                                            <p:inputTextarea id="remak" value="#{testcontroller.newcase.case_note}" />
+                                        </div>
+
+                                        <p:panel id="filter">
+
+                                            <h:panelGroup>
+
+
+
+                                                <div class="p-field">
+
+                                                    <p:fileUpload  listener="#{fileUploadView.handleFileUpload}" auto="false" mode="advanced" dragDropSupport="false"
+                                                                   multiple="true" update="messages" sizeLimit="10000000000" fileLimit="10"
+                                                                   allowTypes="/(\.|\/)(pdf|gif|jpe?g|png|doc|docx|xls|xlsx|mp3|mp4)$/">
+                                                        <f:attribute name="tempID" value="#{fileUploadView.tempDocID}" />
+                                                        <f:attribute name="myparamName" value="# {cc.attrs.categoria}" />
+                                                    </p:fileUpload>
+
+                                                    <small>Please ensure all the information is entered correctly.</small>
+                                                </div>
+
+                                            </h:panelGroup>
+
+                                        </p:panel>
+                                    </div>
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Save" icon="pi pi-check" actionListener="#{testcontroller.saveTestEntity}" resetValues="true" update="manage-product-content" process="manage-product-content @this" />
+                                <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageCasesDialog').hide()" class="ui-button-warning">
+                                    <p:confirm header="Caution" message="This action will close this case without saving, do you want to continue?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </f:facet>
+
+                        </p:dialog> 
+
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

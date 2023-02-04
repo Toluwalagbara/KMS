@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Configuration</ui:define>
+
+
+
+    <ui:define name="content">
+        <div class="grid dashboard">
+
+
+            <div class="col-12 md:col-12s">
+                
+                <div class="card" style="height:auto">
+                    <h5>Manage uploaded results for users </h5>
+                    <div class="formgroup-inline col-12">
+                        <div class="field col-2" style="margin-right:0px;" >
+                            <p:inputText id="servername" type="text" placeholder="Background " />
+                        </div>
+                        <div class="field col-2" style="margin-right:0px;">
+                            <p:inputText id="serverurl" type="text" placeholder="URL" />
+                        </div>
+                        <div class="field col-4" style="margin-right:0px;">
+                            <p:inputText id="descritions" class="col-12" type="text" placeholder="Description" />
+                        </div>
+                        
+                         <div class="field col-2" style="margin-right:0px;">
+                            
+                            <p:selectOneMenu id="state" class="col-12">
+                                <f:selectItem itemLabel="Server Type" itemValue="#{null}" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="SORMAS" itemValue="Option 1" />
+                                <f:selectItem itemLabel="DHIS" itemValue="Option 2" />
+                                <f:selectItem itemLabel="FHIR" itemValue="Option 3" />
+                            </p:selectOneMenu>
+                        </div>
+<!--                        <div class="col-2">-->
+                        <p:commandButton class="col-2" style="margin-right:0px; padding: 0px; margin-top: 6px;"  type="button" value="Add URL"/>
+<!--                        </div>-->
+                    </div>
+                </div>
+                <div class="card">
+                    <p:dataTable id="productsTable" var="product" value="#{dataTableDemoView.products1}" reflow="true"
+                                 paginatorPosition="bottom"
+                                 rowKey="#{product.id}" paginator="true" rows="5">
+                        <p:column headerText="Id" sortBy="#{product.id}">
+                            <h:outputText value="#{product.id}"/>
+                        </p:column>
+                        <p:column headerText="Category" sortBy="#{product.category}">
+                            <h:outputText value="#{product.category}"/>
+                        </p:column>
+                        <p:column headerText="Price" sortBy="#{product.price}">
+                            <h:outputText value="#{product.price}">
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Status" sortBy="#{product.inventoryStatus}">
+                            <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus}</span>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <p:commandButton icon="pi pi-search"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </div>
+            </div>
+
+
+        </div>
+    </ui:define>
+
+</ui:composition>

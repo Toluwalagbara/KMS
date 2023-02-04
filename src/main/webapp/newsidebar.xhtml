@@ -1,0 +1,287 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pa="http://primefaces.org/atlantis">
+
+    <div class="layout-sidebar #{guestPreferences.menuColor}">
+        <pa:tabMenu id="tabMenu">
+            <pa:tab id="tab1" icon="pi pi-folder-open" title="Features">
+                <h:form id="menu-form">
+                    <pa:menu widgetVar="AtlantisMenuWidget">
+                        <p:menuitem id="m_dashboard" value="Dashboard" icon="pi pi-fw pi-home" outcome="/dashboard"/>
+
+                        <p:submenu id="m_components1" label="Configuration" icon="pi pi-fw pi-star">
+                            <p:menuitem id="m_configuration" value="Enter/Dispaly URL " icon="pi pi-fw pi-home" outcome="/configuration"/>
+                            <p:menuitem id="m_configuration1" value="Pair Source " icon="pi pi-fw pi-home" outcome="/sourcepairing"/>
+                            <p:menuitem id="m_configuration2" value="List Paired Sources  " icon="pi pi-fw pi-home" outcome="/pairedsources"/>
+                            <p:menuitem id="m_configuration3" value="User Management" icon="pi pi-fw pi-home" outcome="/usermanagement"/>
+
+                        </p:submenu>
+
+                        <p:submenu id="m_components" label="UI Kit" icon="pi pi-fw pi-star">
+                            <p:menuitem id="m_formlayout" value="Form Layout" icon="pi pi-fw pi-id-card"
+                                        outcome="/formlayout"/>
+                            <p:menuitem id="m_input" value="Input" icon="pi pi-fw pi-check-square" outcome="/input"/>
+                            <p:menuitem id="m_floatlabel" value="Float Label" icon="pi pi-fw pi-bookmark"
+                                        outcome="/floatlabel"/>
+                            <p:menuitem id="m_invalidstate" value="Invalid State" icon="pi pi-fw pi-exclamation-circle"
+                                        outcome="/invalidstate"/>
+                            <p:menuitem id="m_button" value="Button" icon="pi pi-fw pi-mobile" outcome="/button"
+                                        styleClass="rotated-icon"/>
+                            <p:menuitem id="m_table" value="Table" icon="pi pi-fw pi-table" outcome="/table"/>
+                            <p:menuitem id="m_list" value="List" icon="pi pi-fw pi-list" outcome="/list"/>
+                            <p:menuitem id="m_tree" value="Tree" icon="pi pi-fw pi-share-alt" outcome="/tree"/>
+                            <p:menuitem id="m_panel" value="Panel" icon="pi pi-fw pi-tablet" outcome="/panel"/>
+                            <p:menuitem id="m_overlay" value="Overlay" icon="pi pi-fw pi-clone" outcome="/overlay"/>
+                            <p:menuitem id="m_menu" value="Menu" icon="pi pi-fw pi-bars" outcome="/menu"/>
+                            <p:menuitem id="m_message" value="Message" icon="pi pi-fw pi-comment" outcome="/messages"/>
+                            <p:menuitem id="m_file" value="File" icon="pi pi-fw pi-file" outcome="/file"/>
+                            <p:menuitem id="m_chart" value="Chart" icon="pi pi-fw pi-chart-bar" outcome="/charts"/>
+                            <p:menuitem id="m_media" value="Media" icon="pi pi-fw pi-image" outcome="/media"/>
+                            <p:menuitem id="m_misc" value="Misc" icon="pi pi-fw pi-circle-off" outcome="/misc"/>
+                        </p:submenu>
+                        <p:submenu id="m_primeblocks" label="Prime Blocks" icon="pi pi-fw pi-prime">
+                            <p:menuitem id="m_freeblocks" value="Free Blocks" icon="pi pi-fw pi-eye" outcome="/blocks"/>
+                            <p:menuitem id="m_allblocks" value="All Blocks" icon="pi pi-fw pi-globe" target="_blank" url="https://www.primefaces.org/primeblocks-jsf"/>
+                        </p:submenu>
+                        <p:submenu id="m_utils" label="Utilities" icon="pi pi-fw pi-compass">
+                            <p:menuitem id="m_icons" value="PrimeIcons" icon="pi pi-fw pi-prime" outcome="/icons"/>
+                            <p:menuitem id="m_flex" value="PrimeFlex" icon="pi pi-fw pi-desktop" target="_blank" url="https://www.primefaces.org/primeflex"/>
+                        </p:submenu>
+                        <p:submenu id="m_default" label="Pages" icon="pi pi-fw pi-briefcase">
+                            <p:menuitem id="m_crud" value="Crud" icon="pi pi-fw pi-pencil" outcome="/crud"/>
+                            <p:menuitem id="m_calendar" value="Calendar" icon="pi pi-fw pi-calendar-plus"
+                                        outcome="/calendar"/>
+                            <p:menuitem id="m_chronoline" value="Chronoline" icon="pi pi-fw pi-calendar"
+                                        outcome="/chronoline"/>
+                            <p:menuitem id="m_landing" value="Landing" icon="pi pi-fw pi-user-plus"
+                                        outcome="/landing"/>
+                            <p:menuitem id="m_login" value="Login" icon="pi pi-fw pi-sign-in" outcome="/login"/>
+                            <p:menuitem id="m_invoice" value="Invoice" icon="pi pi-fw pi-dollar" outcome="/invoice"/>
+                            <p:menuitem id="m_help" value="Help" icon="pi pi-fw pi-question-circle" outcome="/help"/>
+                            <p:menuitem id="m_error" value="Error" icon="pi pi-fw pi-times-circle" outcome="/error"/>
+                            <p:menuitem id="m_notfound" value="Not Found" icon="pi pi-fw pi-exclamation-circle"
+                                        outcome="/notfound"/>
+                            <p:menuitem id="m_access" value="Access Denied" icon="pi pi-fw pi-lock" outcome="/access"/>
+                            <p:menuitem id="m_empty" value="Empty" icon="pi pi-fw pi-circle-off" outcome="/empty"/>
+                        </p:submenu>
+                        <p:submenu id="m_hierarchy" label="Hierarchy" icon="pi pi-fw pi-align-left">
+                            <p:submenu id="m_sm1" label="Submenu 1" icon="pi pi-fw pi-align-left">
+                                <p:submenu id="m_sm11" label="Submenu 1.1" icon="pi pi-fw pi-align-left">
+                                    <p:menuitem id="m_lnk111" value="Link 1.1.1" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                    <p:menuitem id="m_lnk112" value="Link 1.1.2" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                    <p:menuitem id="m_lnk113" value="Link 1.1.3" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                </p:submenu>
+                                <p:submenu id="m_sm12" label="Submenu 1.2" icon="pi pi-fw pi-align-left">
+                                    <p:menuitem id="m_lnk121" value="Link 1.2.1" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                </p:submenu>
+                            </p:submenu>
+                            <p:submenu id="m_sm2" label="Submenu 2" icon="pi pi-fw pi-align-left">
+                                <p:submenu id="m_sm21" label="Submenu 2.1" icon="pi pi-fw pi-align-left">
+                                    <p:menuitem id="m_lnk211" value="Link 2.1.1" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                    <p:menuitem id="m_lnk212" value="Link 2.1.2" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                </p:submenu>
+                                <p:submenu id="m_sm22" label="Submenu 2.2" icon="pi pi-fw pi-align-left">
+                                    <p:menuitem id="m_lnk221" value="Link 2.2.1" icon="pi pi-fw pi-align-left"
+                                                url="#"/>
+                                </p:submenu>
+                            </p:submenu>
+                        </p:submenu>
+                        <p:menuitem id="m_buy" value="Buy Now" icon="pi pi-fw pi-shopping-cart"
+                                    url="https://www.primefaces.org/store"/>
+                        <p:menuitem id="m_doc" value="Documentation" icon="pi pi-fw pi-info-circle"
+                                    outcome="/documentation"/>
+                    </pa:menu>
+                </h:form>
+            </pa:tab>
+
+            <pa:tab id="tab2" icon="pi pi-inbox" title="Inbox">
+                <div class="inbox-tab">
+                    <ul>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar1.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Joshua Williams</span>
+                            <span class="message">Reports attached</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar1.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Joshua Williams</span>
+                            <span class="message">About the meeting</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar2.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Emily Clark</span>
+                            <span class="message">TODO Update</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar3.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Tim Johnson</span>
+                            <span class="message">Expense Reports</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar4.png" library="atlantis-layout" width="45"/>
+                            <span class="name">David Stark</span>
+                            <span class="message">Rating Reviews</span>
+                        </li>
+                    </ul>
+                    <div class="inbox-labels">
+                        <span>Labels</span>
+                        <ul>
+                            <li class="clearfix">
+                                <span class="inbox-label">Work</span>
+                                <span class="inbox-label-badge">4</span>
+                            </li>
+                            <li class="clearfix">
+                                <span class="inbox-label">Personel</span>
+                                <span class="inbox-label-badge">2</span>
+                            </li>
+                            <li class="clearfix">
+                                <span class="inbox-label">Shared</span>
+                                <span class="inbox-label-badge">3</span>
+                            </li>
+                            <li class="clearfix">
+                                <span class="inbox-label">General</span>
+                                <span class="inbox-label-badge">5</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </pa:tab>
+
+            <pa:tab id="tab3" icon="pi pi-calendar" title="Calendar">
+                <div class="calendar-tab">
+                    <ul>
+                        <li class="clearfix">
+                            <div class="calendar-event-date">
+                                <span>21</span>
+                                <span>OCT</span>
+                            </div>
+                            <div class="calendar-event-detail">
+                                <span class="calendar-event-title">Project Meeting</span>
+                                <i class="pi pi-map-marker"></i>
+                                <span class="calendar-event-location">Chicago</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="calendar-event-date">
+                                <span>13</span>
+                                <span>NOV</span>
+                            </div>
+                            <div class="calendar-event-detail">
+                                <span class="calendar-event-title">Presentation 1</span>
+                                <i class="pi pi-map-marker"></i>
+                                <span class="calendar-event-location">New York</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="calendar-event-date">
+                                <span>01</span>
+                                <span>DEC</span>
+                            </div>
+                            <div class="calendar-event-detail">
+                                <span class="calendar-event-title">Presentation 2</span>
+                                <i class="pi pi-map-marker"></i>
+                                <span class="calendar-event-location">New York</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="calendar-event-date">
+                                <span>25</span>
+                                <span>DEC</span>
+                            </div>
+                            <div class="calendar-event-detail">
+                                <span class="calendar-event-title">Presentation 3</span>
+                                <i class="pi pi-map-marker"></i>
+                                <span class="calendar-event-location">San Diego</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </pa:tab>
+
+            <pa:tab id="tab4" icon="pi pi-sliders-h" title="Projects">
+                <div class="projects-tab">
+                    <ul>
+                        <li class="clearfix">
+                            <i class="pi pi-github"></i>
+                            <span class="project-title">GitHub Tasks</span>
+                            <span>3 open, 4 closed</span>
+                            <div class="project-progressbar">
+                                <div class="project-progressbar-value" style="width: 50%"></div>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <i class="pi pi-video"></i>
+                            <span class="project-title">YouTube Videos</span>
+                            <span>12 new, 2 subscribers</span>
+                            <div class="project-progressbar">
+                                <div class="project-progressbar-value" style="width: 20%"></div>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <i class="pi pi-twitter"></i>
+                            <span class="project-title">Twitter Posts</span>
+                            <span>24 new messages</span>
+                            <div class="project-progressbar">
+                                <div class="project-progressbar-value" style="width: 65%"></div>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <i class="pi pi-facebook"></i>
+                            <span class="project-title">Facebook Messages</span>
+                            <span>8 total, 4 unread</span>
+                            <div class="project-progressbar">
+                                <div class="project-progressbar-value" style="width: 80%"></div>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <i class="pi pi-user"></i>
+                            <span class="project-title">Linkedin Contacts</span>
+                            <span>90 total</span>
+                            <div class="project-progressbar">
+                                <div class="project-progressbar-value" style="width: 90%"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </pa:tab>
+
+            <pa:tab id="tab5" icon="pi pi-users" title="Team">
+                <div class="team-tab">
+                    <ul>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar1.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Joshua Williams</span>
+                            <span class="location">New York, USA</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar2.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Jennifer Clarkson</span>
+                            <span class="location">Paris, France</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar3.png" library="atlantis-layout" width="45"/>
+                            <span class="name">Tim Johnson</span>
+                            <span class="location">London, England</span>
+                        </li>
+                        <li class="clearfix">
+                            <p:graphicImage name="images/avatar4.png" library="atlantis-layout" width="45"/>
+                            <span class="name">David Stark</span>
+                            <span class="location">San Francisco, USA</span>
+                        </li>
+                    </ul>
+                </div>
+            </pa:tab>
+        </pa:tabMenu>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,154 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/flags/flags.css" library="demo" />
+    </ui:define>
+    <ui:define name="title">User Manager</ui:define>
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="p-grid table-demo">
+                <div class="p-col-12">
+                    <div class="card">
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <h2>Users</h2>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Create New User" type="button" onclick="PF('dlg').show()" icon="pi pi-plus" styleClass="ui-button-success" rendered="#{sec:areAnyGranted('ROLE_SUPER')}"/>
+                                <p:dialog header="Create New User" id="ddhdd" widgetVar="dlg" modal="true" responsive="false" width="450" showEffect="fade" hideEffect="fade" fitViewport="true" positionType="absolute"  blockScroll="false">
+                                    <div class="p-col-12">
+                                        <div class="card ui-fluid">
+                                            <div class="p-field">
+                                                <p:outputLabel for="name1">First Name</p:outputLabel>
+                                                <p:inputText id="name1" value="#{userController.newuser.firstName}" required="true" requiredMessage="First Name is required"><f:validateLength minimum="3"/></p:inputText>
+                                                
+                                            </div>
+                                            <div class="p-field">
+                                                <p:outputLabel for="age1">Last Name</p:outputLabel>
+                                                <p:inputText id="age1" value="#{userController.newuser.lastName}" required="true"><f:validateLength minimum="3"/></p:inputText>
+                                            </div>
+                                            <div class="p-field">
+                                                <p:outputLabel for="rank" value="Rank" />
+                                                <p:selectOneMenu id="rank" value="#{userController.newuser.rank}" required="true">
+                                                    <f:selectItem itemLabel="--Choose Rank--" itemValue="#{null}" noSelectionOption="true"/>
+                                                    <f:selectItem itemLabel="Chief State Counsel" itemValue="Chief State Counsel" />
+                                                    <f:selectItem itemLabel="State Counsel" itemValue="State Counsel" />
+                                                    <f:selectItem itemLabel="Senior State Counsel" itemValue="Senior State Counsel" />
+                                                    <f:selectItem itemLabel="Principal State Counsel" itemValue="Principal State Counsel" />
+                                                    <f:selectItem itemLabel="Assistant Chief State Counsel" itemValue="Assistant Chief State Counsel" />
+                                                    <f:selectItem itemLabel="Assistant Director" itemValue="Assistant Director" />
+                                                    <f:selectItem itemLabel="Deputy Director" itemValue="Deputy Director" />
+                                                    <f:selectItem itemLabel="Deputy DPP" itemValue="Deputy DPP" />
+                                                    <f:selectItem itemLabel="DPP" itemValue="DPP" />
+                                                    <f:selectItem itemLabel="DG" itemValue="DG" />
+                                                    <f:selectItem itemLabel="District Counsel" itemValue="District Counsel" />
+                                                    <f:selectItem itemLabel="Case Registrar" itemValue="Case Registrar" />
+                                                    <f:selectItem itemLabel="Others" itemValue="Others" />
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="p-field">
+                                                <p:outputLabel for="role" value="Role" />
+                                                <p:selectOneMenu id="role" value="#{userController.newuser.creationroleselected}" required="true">
+                                                    <f:selectItem itemLabel="--Choose role--" itemValue="#{null}" noSelectionOption="true"/>
+                                                    <f:selectItem itemLabel="Legal Adviser" itemValue="Legal Adviser" />
+                                                    <f:selectItem itemLabel="ANTE Room" itemValue="ANTE Room" />
+                                                    <f:selectItem itemLabel="DPP Director" itemValue="DPP Director" />
+                                                    <!--<f:selectItem itemLabel="Case Register" itemValue="Case Register" />-->
+                                                    <!--<f:selectItem itemLabel="DPP Director" itemValue="DPP Director" />-->
+                                                    <f:selectItem itemLabel="Admin" itemValue="Admin" />
+                                                    <f:selectItem itemLabel="Unit Head" itemValue="Unit Head" />
+                                                    <f:selectItem itemLabel="Director" itemValue="Director" />
+                                                    <f:selectItem itemLabel="Public Viewer" itemValue="Public Viewer" />
+                                                    <f:selectItem itemLabel="Perm Sec" itemValue="Perm Sec" />
+                                                    <f:selectItem itemLabel="HAG" itemValue="DG" />
+                                                </p:selectOneMenu>
+                                            </div>
+                                            
+                                             <div class="p-field">
+                                                <p:outputLabel for="email1">Email</p:outputLabel>
+                                                <p:inputText id="email1" value="#{userController.newuser.email}" validatorMessage="Invalid email address detected, only justice.gov.ng is allowed on this server." required="true">
+                                                 <f:validateRegex pattern="^\w+([\.-]?\w+)*@(justice.gov.ng)+$"/>
+                                                </p:inputText>
+                                                <p:message for="email1"/>
+                                            </div>
+                                            
+                                            <div class="p-field">
+                                                <p:outputLabel for="num">Phone Number</p:outputLabel>
+                                                <p:inputText id="num"/>
+                                            </div>
+                                       
+                                        </div>
+                                    </div>
+                                    <f:facet name="footer">
+                                       
+                                        <p:commandButton value="Cancel" type="button" icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('dlg').hide()">
+                                             <p:ajax update="ddhdd" resetValues="true"/>
+                                        </p:commandButton>
+                                         <p:commandButton validateClient="true" ajax="false" value="Create New User" icon="ui-button-success" actionListener="#{userController.createnewuser()}"/>
+                                       
+                                    </f:facet>
+                                </p:dialog>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable widgetVar="UsersDT" var="users" value="#{usersView.users}" reflow="true"
+                                     selection="#{usersView.selectedUsers}" rowKey="#{users.id}"
+                                     paginator="true" rows="20" paginatorPosition="bottom" rowSelectMode="add">
+
+                            <f:facet name="header">
+                                <div class="products-table-header">
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('UsersDT').filter()" placeholder="Search User ID/ Firstname/ Lastname" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+
+                            
+                            <p:column headerText="First Name" sortBy="#{users.firstName}" filterBy="#{users.firstName}">
+                                <h:outputText value="#{users.firstName.toUpperCase()}" />
+                            </p:column>
+                            <!--  <p:column headerText="Name" sortBy="#{customer.representative.name}" filterBy="#{customer.representative.name}">
+                                <p:graphicImage name="images/avatar/#{customer.representative.image}" library="demo" width="32" style="vertical-align: middle" />
+                                <h:outputText style="vertical-align: middle; margin-left: .5rem" value="#{customer.representative.name}" />
+                            </p:column> -->
+                            <p:column headerText="Last Name" sortBy="#{users.lastName}" filterBy="#{users.lastName}">
+                                <h:outputText value="#{users.lastName.toUpperCase()}" />
+                            </p:column>
+                            <p:column headerText="Email" sortBy="#{users.email}" filterBy="#{users.email}">
+                                <h:outputText value="#{users.email}" />
+                            </p:column>
+                            <p:column headerText="Rank" sortBy="#{users.rank}" filterBy="#{users.rank}">
+                                <h:outputText value="#{users.rank}" />
+                            </p:column>
+                            <p:column headerText="Activated" sortBy="#{users.enabled}" filterBy="#{users.enabled}">
+                                <h:outputText value="#{users.enabled}" />
+                            </p:column>
+                            
+                            
+                            <p:column style="width: 10rem;">
+                                <p:button value="View Profile" icon="pi pi-user" styleClass="ui-button-raised ui-button-success p-mr-2 p-mb-2" href="/userdet?userid=#{users.id}" style="width: 10rem;"/>
+                            </p:column> 
+                            <p:column style="width: 10rem;">
+                                <p:button value="Edit Profile" icon="pi pi-user-edit" styleClass="ui-button-raised ui-button-success p-mr-2 p-mb-2" href="/usereditprofile?userid=#{users.id}" style="width: 10rem;"/>
+                            </p:column>
+                            <!--   <p:column style="width: 2rem;">
+                                   <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" style="width: 2rem;"  rendered="# {sec:areAnyGranted('ROLE_SUPER, ROLE_ADMIN')}"/>
+                               </p:column> -->
+
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
